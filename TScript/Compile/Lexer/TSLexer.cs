@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TScript.Compile.Common;
-using static TScript.Compile.Common.LexerConfig;
+using TScript.Common;
+using static TScript.Common.LexerConfig;
 
 namespace TScript.Compile.Lexer
 {
     /// <summary>
     /// 词法分析器
+    /// 通过输入的文本生成对应的Token
     /// </summary>
     public partial class TSLexer
     {
@@ -105,6 +106,8 @@ namespace TScript.Compile.Lexer
                         break;
                 }
             }
+            InsterToken(0, TokenType.BEGIN, null, new Position(0, 1, 0));
+            AddToken(TokenType.END, null, new Position(_curIndex, _curRow, _curCol));
             return _tokens;
         }
 
@@ -131,13 +134,23 @@ namespace TScript.Compile.Lexer
         /// <param name="value"></param>
         private void AddToken(TokenType token, object value)
         {
-            AddToken(token, value, _curRow, _curCol);
+            AddToken(token, value, new Position(_curIndex, _curRow, _curCol));
         }
-        private void AddToken(TokenType type, object lexeme, int startRow, int startCol)
+        private void AddToken(TokenType type, object lexeme, Position start)
         {
-            _tokens.Add(new Token(_chunk, type, lexeme, startRow, startCol, _curRow, _curCol));
+            AddToken(type, lexeme, start, new Position(_curIndex, _curRow, _curCol));
+        }
+        private void AddToken(TokenType type, object lexeme, Position start, Position end)
+        {
+            _tokens.Add(new Token(_chunk, type, lexeme, start, end));
             _builder.Clear();
         }
+        private void InsterToken(int index, TokenType type, object lexeme, Position start)
+        {
+            _tokens.Insert(index, new Token(_chunk, type, lexeme, start, new Position(_curIndex, _curRow, _curCol)));
+            _builder.Clear();
+        }
+
         /// <summary>
         /// 读取下一个字符并前进异步
         /// </summary>
@@ -196,8 +209,7 @@ namespace TScript.Compile.Lexer
         {
             _builder.Append(_curChar);
             int dot_coumt = 0;
-            int startRow = _curRow;
-            int startCol = _curCol;
+            Position start = new Position(_curIndex, _curRow, _curCol);
             do
             {
                 _tempChar = ReadChar();
@@ -217,11 +229,11 @@ namespace TScript.Compile.Lexer
                     UndoChar();
                     if (dot_coumt > 0)
                     {
-                        AddToken(TokenType.DOUBLE_NUM, double.Parse(_builder.ToString()), startRow, startCol);
+                        AddToken(TokenType.DOUBLE_NUM, double.Parse(_builder.ToString()), start);
                     }
                     else
                     {
-                        AddToken(TokenType.LONG_NUM, long.Parse(_builder.ToString()), startRow, startCol);
+                        AddToken(TokenType.LONG_NUM, long.Parse(_builder.ToString()), start);
                     }
                     break;
                 }

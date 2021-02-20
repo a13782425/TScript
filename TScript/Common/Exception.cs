@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TScript.Compile.Common
+namespace TScript.Common
 {
     /// <summary>
     /// 解析异常

@@ -7,27 +7,59 @@ namespace TScript.Test
 {
     class Program
     {
+        static Program()
+        {
+
+        }
         const int LENGTH = 10000;
-        const int TEST = 100000000;
+        const int TEST = 100;
         static void Main(string[] args)
         {
-            TScript ts = new TScript();
-            ts.LoadString("12+1.3");
+            //TScript ts = new TScript();
+            //ts.LoadString("12+1.3+1+10+20-4.3");
+
             //TSLexer lexer = new TSLexer("12+1.3");
             //lexer.GetTokens();
-            //int b = 10;
-            //int a = 12;
-            //b = a + b;
-
+            ScriptTest();
+            double b = 1.1;
+            int a = 12;
+            b = a - b;
+            b = a + b;
+            //b = a - b;
+            //b = a * b;
+            //b = a / b;
+            //b = -b;
+            //var c = b + "1";
+            //int b = 1 + 1 * 2 + (2 + 3) / 5 - 10;
             //DicTest();
             //SwitchTest();
-            StrDicTest2();
-            StrDicTest();
+            //StrDicTest2();
+            //StrDicTest();
             //IntDicTest2();
             //Console.WriteLine(b);
+            //    goto Te;
+            //    Test();
+            //Te: a = Test();
             Console.ReadLine();
         }
-
+        static int Test()
+        {
+            return 1;
+        }
+        static void ScriptTest()
+        {
+            System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start(); //  开始监视代码运行时间
+            for (int i = 0; i < TEST; i++)
+            {
+                //TScript ts = new TScript();
+                //ts.LoadString("12+1.3+1+10+20-4.3");
+                Console.WriteLine(12 + 1.3 + 1 + 10 + 20 - 4.3);
+            }
+            stopwatch.Stop(); //  停止监视
+            TimeSpan timespan = stopwatch.Elapsed; //  获取当前实例测量得出的总时间
+            Console.WriteLine("ScriptTest：{0}(毫秒)", timespan.TotalMilliseconds);  //总毫秒数
+        }
         static void StrDicTest()
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();

@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TScript.Compile.Common
+namespace TScript.Common
 {
     /// <summary>
     /// 脚本的表征类型
     /// </summary>
     public enum TokenType
     {
+        /// <summary>
+        /// 开始
+        /// </summary>
+        BEGIN,
         /// <summary>
         /// {
         /// </summary>
@@ -62,6 +66,9 @@ namespace TScript.Compile.Common
         /// </summary>
         DIV,
 
-
+        /// <summary>
+        /// 结束
+        /// </summary>
+        END,
     }
 }
