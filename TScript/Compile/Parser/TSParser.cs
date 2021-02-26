@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TScript.Common;
 
-namespace TScript.Compile.Parser
+namespace TScript.Compile
 {
     /// <summary>
     /// 语法解释器
@@ -12,12 +12,19 @@ namespace TScript.Compile.Parser
     public sealed partial class TSParser
     {
         private List<Token> _tokens = default;
+        private TokenData _tokenData = default;
         private int _index = -1;
         private Token _curToken = default;
         private RootTree _rootTree = default;
         public TSParser(List<Token> tokens)
         {
             this._tokens = tokens;
+            _index = -1;
+        }
+        public TSParser(TokenData tokenData)
+        {
+            this._tokenData = tokenData;
+            _tokenData.Reset();
             _index = -1;
         }
 
@@ -43,7 +50,7 @@ namespace TScript.Compile.Parser
         /// 分析位置+1
         /// </summary>
         /// <param name="curChar">当前字符</param>
-        public void Advance()
+        private void Advance()
         {
             this._index += 1;
             this.UpdateCurToken();
@@ -52,7 +59,7 @@ namespace TScript.Compile.Parser
         /// 分析位置-1
         /// </summary>
         /// <param name="amount">往前几步,默认一步</param>
-        public void Reverse(int amount = 1)
+        private void Reverse(int amount = 1)
         {
             this._index -= amount;
             this.UpdateCurToken();
@@ -62,7 +69,7 @@ namespace TScript.Compile.Parser
         /// 如果往前了几步，那么当前的token也需要更新成前几步对应的token
         /// </summary>
         /// <param name=""></param>
-        public void UpdateCurToken()
+        private void UpdateCurToken()
         {
             if (this._index >= 0 && this._index < this._tokens.Count)
                 this._curToken = this._tokens[this._index];

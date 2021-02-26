@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using TScript.Common;
 using TScript.Instruction;
-using TScript.Instruction.Code;
 
-namespace TScript.Compile.Parser
+namespace TScript.Compile
 {
     public sealed class LongTree : BaseTree
     {

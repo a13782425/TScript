@@ -4,26 +4,26 @@ using System.Text;
 using TScript.Common;
 using TScript.Instruction;
 
-namespace TScript.Compile.Parser
+namespace TScript.Compile
 {
     /// <summary>
     /// 树基类
     /// </summary>
     public abstract class BaseTree
     {
+        /// <summary>
+        /// 包名
+        /// </summary>
+        public readonly string PackageName;
         public BaseTree(Token token)
         {
-            Chunk = token.chunk;
+            PackageName = token.chunk;
             Start = token.start;
             End = token.end;
             type = token.type;
         }
         public abstract TreeCode Code { get; }
         protected TokenType type { get; private set; }
-        /// <summary>
-        /// 代码块名称
-        /// </summary>
-        public string Chunk { get; private set; }
 
         public virtual void Compile(TScriptData scriptData)
         {

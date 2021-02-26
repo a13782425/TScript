@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using TScript.Instruction;
-using TScript.Instruction.Code;
 
 namespace TScript.Runtime
 {

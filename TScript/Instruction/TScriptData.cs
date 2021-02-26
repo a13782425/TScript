@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TScript.Instruction.Code;
 
 namespace TScript.Instruction
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TScript.Instruction.Code
+namespace TScript.Instruction
 {
     public sealed class MulOpCode : BaseCode
     {

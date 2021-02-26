@@ -15,16 +15,17 @@ namespace TScript.Test
         const int TEST = 100;
         static void Main(string[] args)
         {
-            //TScript ts = new TScript();
+            TScript ts = new TScript();
+            ts.DoString("12+1.3+1+10+20-4.3");
             //ts.LoadString("12+1.3+1+10+20-4.3");
 
             //TSLexer lexer = new TSLexer("12+1.3");
             //lexer.GetTokens();
-            ScriptTest();
-            double b = 1.1;
-            int a = 12;
-            b = a - b;
-            b = a + b;
+            //ScriptTest();
+            //double b = 1.1;
+            //int a = 12;
+            //b = a - b;
+            //b = a + b;
             //b = a - b;
             //b = a * b;
             //b = a / b;

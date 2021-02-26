@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TScript.Runtime;
 
-namespace TScript.Instruction.Code
+namespace TScript.Instruction
 {
     /// <summary>
     /// long整形指令

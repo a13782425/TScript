@@ -4,7 +4,7 @@ using System.Text;
 using TScript.Common;
 using static TScript.Common.LexerConfig;
 
-namespace TScript.Compile.Lexer
+namespace TScript.Compile
 {
     /// <summary>
     /// 词法分析器
@@ -13,8 +13,8 @@ namespace TScript.Compile.Lexer
     public partial class TSLexer
     {
         private string _strBuffer = "";
-        private string _chunk = "";
-        private List<Token> _tokens = null;
+        private string _packageName = "";
+        private TokenData _token = null;
         /// <summary>
         /// 代码读取结束
         /// </summary>
@@ -52,20 +52,32 @@ namespace TScript.Compile.Lexer
         /// 当前缓存的字符串
         /// </summary>
         private StringBuilder _builder = new StringBuilder();
-        public TSLexer(string text, string chunk = null)
+        public TSLexer() { }
+
+        /// <summary>
+        /// 获取到Token
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="packageName"></param>
+        /// <returns></returns>
+        public TokenData GetTokens(string code, string packageName)
         {
-            _chunk = chunk ?? "Undefined";
-            _strBuffer = text;
+            _packageName = packageName;
+            _strBuffer = code;
             _length = _strBuffer.Length;
-            _tokens = new List<Token>();
             _pos = new Position(-1, 1, 0);
+            return GetTokens();
         }
 
-
-        public List<Token> GetTokens()
+        /// <summary>
+        /// 获取到Token
+        /// </summary>
+        /// <returns></returns>
+        public TokenData GetTokens()
         {
+            _token = new TokenData(_packageName);
+            _token.Start = _pos.Copy();
             _curChar = END_CHAR;
-            _tokens.Clear();
             _builder.Clear();
             _curRow = 1;
             while (_curIndex < _length && !END_SCRIPT)
@@ -106,9 +118,8 @@ namespace TScript.Compile.Lexer
                         break;
                 }
             }
-            InsterToken(0, TokenType.BEGIN, null, new Position(0, 1, 0));
-            AddToken(TokenType.END, null, new Position(_curIndex, _curRow, _curCol));
-            return _tokens;
+            _token.End = _pos.Copy();
+            return _token;
         }
 
 
@@ -142,12 +153,7 @@ namespace TScript.Compile.Lexer
         }
         private void AddToken(TokenType type, object lexeme, Position start, Position end)
         {
-            _tokens.Add(new Token(_chunk, type, lexeme, start, end));
-            _builder.Clear();
-        }
-        private void InsterToken(int index, TokenType type, object lexeme, Position start)
-        {
-            _tokens.Insert(index, new Token(_chunk, type, lexeme, start, new Position(_curIndex, _curRow, _curCol)));
+            _token.AddToken(new Token(_packageName, type, lexeme, start, end));
             _builder.Clear();
         }
 

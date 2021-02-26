@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TScript.Compile.Parser
+namespace TScript.Compile
 {
     /// <summary>
     /// 语法树节点类型

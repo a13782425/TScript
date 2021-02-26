@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TScript.Compile.Parser;
+using TScript.Compile;
 using TScript.Instruction;
 
 namespace TScript.Compile

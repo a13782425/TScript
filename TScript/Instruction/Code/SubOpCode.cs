@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TScript.Runtime;
 
-namespace TScript.Instruction.Code
+namespace TScript.Instruction
 {
     public sealed class SubOpCode : BaseCode
     {

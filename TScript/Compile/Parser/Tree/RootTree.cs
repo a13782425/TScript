@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TScript.Common;
 
-namespace TScript.Compile.Parser
+namespace TScript.Compile
 {
     /// <summary>
     /// 树根
